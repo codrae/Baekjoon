@@ -1,17 +1,23 @@
 #include <iostream>
 using namespace std;
 
-int N,M,res,sum,subM;
-int arr[510][510];
+short N,M,res,sum,subM;
+short arr[504][504];
 
-pair<int,int>c1[7] = {make_pair(0,1), make_pair(0,-1)
+
+pair<short,short>c1[7] = {make_pair(0,1), make_pair(0,-1)
 ,make_pair(1,1), make_pair(1,-1)
 ,make_pair(2,1), make_pair(2,-1)
         ,make_pair(3,0)};
 
 //c2 : c1 first,second swap
 
-void find_max(int x, int y){
+short max(short a, short b){
+    if(a>b) return a;
+    else return b;
+}
+
+void find_max(short x, short y){
     // case 1  --- + 1
     sum = arr[x][y] + arr[x+1][y] + arr[x+2][y];
     subM = 0;
@@ -19,6 +25,7 @@ void find_max(int x, int y){
         subM = max(subM,arr[x+c1[i].first][y+c1[i].second]);
     }
     res = max(res,sum+subM);
+
     // case 2  | + 1
     sum = arr[x][y] + arr[x][y+1] + arr[x][y+2];
     subM = 0;
@@ -26,6 +33,7 @@ void find_max(int x, int y){
         subM = max(subM,arr[x+c1[i].second][y+c1[i].first]);
     }
     res = max(res,sum+subM);
+
     // case 3 -- + 2
     sum = arr[x][y] + arr[x+1][y];
     subM = 0;

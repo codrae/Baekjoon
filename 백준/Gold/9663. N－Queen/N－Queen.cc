@@ -1,42 +1,33 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
 int N,res;
-int queen[15];
+bool u[15],ld[30],rd[30];
 
-bool check(int x, int y){
-    for (int i = 0; i < x; ++i) {
-                if(i-queen[i] == x-y || i+queen[i] == x+y || y == queen[i]) {
-                    return false;
-        }
+bool check(int k, int i){
+    for (int j = 0; j < k; ++j) {
+        if(u[i] || ld[k-i+N-1] || rd[k+i] ) return false;
     }
     return true;
 }
 
-
-void solve(int k) {
-    if (k == N) {
-        res += 1;
+void func(int k){
+    if(k == N){
+        res++;
         return;
     }
-    for (int i = 0; i <N; ++i) {
+    for (int i = 0; i < N; ++i) {
         if(check(k,i)){
-            queen[k] = i;
-            // 아래부분에 대해서만 체크
-            solve(k+1);
+            u[i] = ld[k-i+N-1] = rd[k+i] = 1;
+            func(k+1);
+            u[i] = ld[k-i+N-1] = rd[k+i] = 0;
         }
     }
-
-
 }
 
-int main(){
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-
+int main() {
     cin >> N;
-    solve(0);
+    func(0);
     cout << res;
-
     return 0;
 }
